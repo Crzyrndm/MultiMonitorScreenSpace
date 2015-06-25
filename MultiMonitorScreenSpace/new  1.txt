@@ -1,0 +1,15 @@
+Flight Cameras
+Camera 00, True, 0, MainCamera, (x:0.00, y:0.00, width:1920.00, height:1080.00), 148
+Camera 01, True, -1, Untagged, (x:0.00, y:0.00, width:1920.00, height:1080.00), 150
+
+Map View Cameras
+MapFX Camera 2, False, -1, Untagged, (x:0.00, y:0.00, width:1920.00, height:1080.00), 0
+MapFX Camera 1, False, -2, Untagged, (x:0.00, y:0.00, width:1920.00, height:1080.00), 1
+VectorCam, True, -2, Untagged, (x:0.00, y:0.00, width:1920.00, height:1080.00), 3
+
+Both
+GalaxyCamera, True, -4, Untagged, (x:0.00, y:0.00, width:1920.00, height:1080.00), 151
+Camera ScaledSpace, True, -3, MainCamera, (x:0.00, y:0.00, width:1920.00, height:1080.00), 152
+UICamera, True, 99, MainCamera, (x:0.00, y:0.00, width:1920.00, height:1080.00), 154
+UI camera, True, 2, Untagged, (x:0.00, y:0.00, width:1920.00, height:1080.00), 155
+UI mask camera, True, 3, Untagged, (x:0.00, y:0.00, width:1920.00, height:1080.00), 157
