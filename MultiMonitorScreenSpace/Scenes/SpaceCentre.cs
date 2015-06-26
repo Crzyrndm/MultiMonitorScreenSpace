@@ -14,6 +14,7 @@ namespace MultiMonitorScreenSpace.Scenes
         {
             foreach (Camera c in Camera.allCameras)
             {
+                // don't block the UI cameras in this scene
                 Utils.resizeViewPort(c);
             }
         }

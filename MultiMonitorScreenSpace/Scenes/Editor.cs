@@ -25,6 +25,7 @@ namespace MultiMonitorScreenSpace.Scenes
                 Utils.resizeViewPort(c);
             }
             Utils.resizeViewPort(EditorCamera.Instance.camera);
+            Utils.setUIAnchors();
         }
     }
 }

@@ -8,20 +8,22 @@ namespace MultiMonitorScreenSpace.Utility
     public static class Utils
     {
         public static Rect mainScreen; // the primary display port
-        public static HashSet<string> CamsResized = new HashSet<string>(); // all cameras that have already been resized
+        public static Dictionary<Camera, Rect> CamsResized = new Dictionary<Camera, Rect>();
 
-        public static void resizeViewPort(Camera c, bool force = false)
+        public static void resizeViewPort(Camera c)
         {
-            if (c.name == "EZGUI Cam" && !force)
-                return;
-            if (!CamsResized.Contains(c.name) || c.pixelRect.width == Screen.width || force)
+            if (!CamsResized.ContainsKey(c))
             {
                 Rect r = c.pixelRect;
                 r.x = r.x * mainScreen.width / Screen.width + mainScreen.x;
                 r.width = r.width * mainScreen.width / Screen.width;
                 c.pixelRect = r;
-                if (!CamsResized.Contains(c.name))
-                    CamsResized.Add(c.name);
+                if (!CamsResized.ContainsKey(c))
+                    CamsResized.Add(c, c.pixelRect);
+            }
+            else if (c.pixelRect != CamsResized[c])
+            {
+                c.pixelRect = new Rect(CamsResized[c]);
             }
         }
 
@@ -41,7 +43,7 @@ namespace MultiMonitorScreenSpace.Utility
             blackoutCamLeft.clearFlags = CameraClearFlags.SolidColor;
             blackoutCamLeft.cullingMask = 0;
             blackoutCamLeft.pixelRect = new Rect(0, 0, Utils.mainScreen.x, Screen.height);
-            CamsResized.Add(blackoutCamLeft.name);
+            CamsResized.Add(blackoutCamLeft, blackoutCamLeft.pixelRect);
 
             cameraObjectRight = new GameObject("ExtraScreenBackgroundRight");
             UnityEngine.MonoBehaviour.DontDestroyOnLoad(cameraObjectRight);
@@ -49,7 +51,30 @@ namespace MultiMonitorScreenSpace.Utility
             blackoutCamRight.name = "BlackoutCameraRight";
             blackoutCamRight.CopyFrom(blackoutCamLeft);
             blackoutCamRight.pixelRect = new Rect(Utils.mainScreen.x + Utils.mainScreen.width, 0, Screen.width - Utils.mainScreen.xMax, Screen.height);
-            CamsResized.Add(blackoutCamRight.name);
+            CamsResized.Add(blackoutCamRight, blackoutCamRight.pixelRect);
+        }
+
+        public static void setUIAnchors()
+        {
+            ScreenSafeUI UI = ScreenSafeUI.fetch;
+            if (UI.rightAnchor.bottom != null)
+            {
+                UI.rightAnchor.bottom.position = new Vector3(UI.rightAnchor.bottom.position.x * 0.5f, UI.rightAnchor.bottom.position.y, UI.rightAnchor.bottom.position.z);
+                if (UI.leftAnchor.bottom != null)
+                    UI.centerAnchor.bottom.position = (UI.leftAnchor.bottom.position + UI.rightAnchor.bottom.position) * 0.5f;
+            }
+            if (UI.rightAnchor.center != null)
+            {
+                UI.rightAnchor.center.position = new Vector3(UI.rightAnchor.center.position.x * 0.5f, UI.rightAnchor.center.position.y, UI.rightAnchor.center.position.z);
+                if (UI.leftAnchor.center != null)
+                    UI.centerAnchor.center.position = (UI.leftAnchor.center.position + UI.rightAnchor.center.position) * 0.5f;
+            }
+            if (UI.rightAnchor.top)
+            {
+                UI.rightAnchor.top.position = new Vector3(UI.rightAnchor.top.position.x * 0.5f, UI.rightAnchor.top.position.y, UI.rightAnchor.top.position.z);
+                if (UI.leftAnchor.top != null)
+                    UI.centerAnchor.top.position = (UI.leftAnchor.top.position + UI.rightAnchor.top.position) * 0.5f;   
+            }
         }
     }
 }
