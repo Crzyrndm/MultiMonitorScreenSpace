@@ -21,7 +21,10 @@ namespace MultiMonitorScreenSpace.Scenes
             while (EditorDriver.editorFacility == EditorFacility.None)
                 yield return null;
             foreach (Camera c in Camera.allCameras)
-            { // now only the distortion to remove
+            {
+                Debug.Log(c.name);
+                if (c.name.Contains("UI"))
+                    continue;
                 Utils.resizeViewPort(c);
             }
             Utils.resizeViewPort(EditorCamera.Instance.camera);

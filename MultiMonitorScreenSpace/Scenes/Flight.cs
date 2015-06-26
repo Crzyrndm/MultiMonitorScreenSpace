@@ -35,7 +35,7 @@ namespace MultiMonitorScreenSpace.Scenes
                 MapView.OnExitMapView = LeavingMapView;
             }
 
-            ApplicationLauncher.Instance.anchor.transform.position = new Vector3(ApplicationLauncher.Instance.anchor.transform.position.x * 0.5f, ApplicationLauncher.Instance.anchor.transform.position.y, ApplicationLauncher.Instance.anchor.transform.position.z);
+            //ApplicationLauncher.Instance.anchor.transform.position = new Vector3(ApplicationLauncher.Instance.anchor.transform.position.x * 0.5f, ApplicationLauncher.Instance.anchor.transform.position.y, ApplicationLauncher.Instance.anchor.transform.position.z);
         }
 
         public void EnteringMapView()
@@ -43,6 +43,8 @@ namespace MultiMonitorScreenSpace.Scenes
             mapViewEntered.Invoke();
             foreach (Camera c in Camera.allCameras)
             {
+                if (c.name.Contains("UI"))
+                    continue;
                 Utils.resizeViewPort(c);
             }
             Utils.resizeViewPort(PlanetariumCamera.fetch.camera);
