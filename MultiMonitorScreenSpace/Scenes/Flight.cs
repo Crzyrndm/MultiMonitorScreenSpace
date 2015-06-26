@@ -5,19 +5,19 @@ using UnityEngine;
 
 namespace MultiMonitorScreenSpace.Scenes
 {
+    using Utility;
     [KSPAddon(KSPAddon.Startup.Flight, false)]
     class Flight : MonoBehaviour
     {
         static Callback mapViewEntered;
-        const string lockstring = "OutOfScreenCameraLock";
-        bool locked = false;
+        //const string lockstring = "OutOfScreenCameraLock";
+        //bool locked = false;
 
         public void Start()
         {
             foreach (Camera c in Camera.allCameras)
             {
-                if (!Utils.CamsResized.Contains(c.name))
-                    Utils.resizeViewPort(c);
+                Utils.resizeViewPort(c);
             }
             
             // need to resize the cameras for the mapview when they become active
@@ -33,33 +33,9 @@ namespace MultiMonitorScreenSpace.Scenes
             mapViewEntered.Invoke();
             foreach (Camera c in Camera.allCameras)
             {
-                if (!Utils.CamsResized.Contains(c.name))
-                {
-                    Utils.resizeViewPort(c);
-                }
+                Utils.resizeViewPort(c);
             }
-            if (PlanetariumCamera.fetch.camera.pixelRect.width == Screen.width)
-                Utils.resizeViewPort(PlanetariumCamera.fetch.camera);
-        }
-
-        public void Update()
-        {
-            //if (!Utils.mainScreen.Contains(Input.mousePosition))
-            //{
-            //    if (!locked)
-            //    {
-            //        InputLockManager.SetControlLock(ControlTypes.CAMERACONTROLS, lockstring);
-            //        locked = true;
-            //    }
-            //}
-            //else
-            //{
-            //    if (locked)
-            //    {
-            //        InputLockManager.RemoveControlLock(lockstring);
-            //        locked = false;
-            //    }
-            //}
+            Utils.resizeViewPort(PlanetariumCamera.fetch.camera);
         }
     }
 }

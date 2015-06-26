@@ -6,6 +6,8 @@ using UnityEngine;
 
 namespace MultiMonitorScreenSpace.Scenes
 {
+    using Utility;
+
     [KSPAddon(KSPAddon.Startup.EditorAny, false)]
     class Editor : MonoBehaviour
     {
@@ -19,14 +21,10 @@ namespace MultiMonitorScreenSpace.Scenes
             while (EditorDriver.editorFacility == EditorFacility.None)
                 yield return null;
             foreach (Camera c in Camera.allCameras)
-            { // now only the fov is FUBAR'd
-                if (!Utils.CamsResized.Contains(c.name) || c.pixelRect.width == Screen.width)
-                    Utils.resizeViewPort(c);
+            { // now only the distortion to remove
+                Utils.resizeViewPort(c);
             }
-            if (!Utils.CamsResized.Contains(EditorCamera.Instance.camera.name) || EditorCamera.Instance.camera.pixelRect.width == Screen.width)
-            {
-                Utils.resizeViewPort(EditorCamera.Instance.camera);
-            }
+            Utils.resizeViewPort(EditorCamera.Instance.camera);
         }
     }
 }

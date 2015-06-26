@@ -5,6 +5,8 @@ using UnityEngine;
 
 namespace MultiMonitorScreenSpace.Scenes
 {
+    using Utility;
+    
     [KSPAddon(KSPAddon.Startup.SpaceCentre, false)]
     class SpaceCentre : MonoBehaviour
     {

@@ -46,18 +46,20 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CamTest.cs" />
+    <Compile Include="Utility\CameraViewRect.cs" />
     <Compile Include="Scenes\Editor.cs" />
     <Compile Include="Scenes\MainMenu.cs" />
     <Compile Include="Scenes\Flight.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scenes\Loading.cs" />
     <Compile Include="Scenes\SpaceCentre.cs" />
-    <Compile Include="ScreenResizeBase.cs" />
-    <Compile Include="Utils.cs" />
+    <Compile Include="Utility\Utils.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="new  1.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="GUI\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
