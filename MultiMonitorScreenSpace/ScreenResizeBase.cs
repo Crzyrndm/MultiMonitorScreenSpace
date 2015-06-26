@@ -6,8 +6,8 @@ using UnityEngine;
 
 namespace MapViewTest
 {
-    [KSPAddon(KSPAddon.Startup.EveryScene, false)]
-    public class ScreenResizeBase : MonoBehaviour
+    //[KSPAddon(KSPAddon.Startup.EveryScene, false)]
+    public class ScreenResizeBaseTest : MonoBehaviour
     {
         public static float requestedWidth;
         public static HashSet<string> CamsResized;
@@ -25,13 +25,7 @@ namespace MapViewTest
             mainScreenArea = new Rect(0, 0, requestedWidth, Screen.height);
             foreach (Camera c in Camera.allCameras)
             {
-                if (CamsResized.Contains(c.name))
-                    continue;
-                Rect r = c.pixelRect;
-                r.x = r.x * requestedWidth / Screen.width;
-                r.width = r.width * requestedWidth / Screen.width;
-                c.pixelRect = r;
-                CamsResized.Add(c.name);
+                
             }
 
             cameraObject = new GameObject("ExtraScreenBackground");

@@ -7,12 +7,12 @@ using UnityEngine;
 
 namespace MapViewTest
 {
-    [KSPAddon(KSPAddon.Startup.Flight, false)]
+    //[KSPAddon(KSPAddon.Startup.Flight, false)]
     public class CamTest : MonoBehaviour
     {
-        Callback OnEnter, OnLeave;
-        GameObject CameraObject;
-        Camera PCam, SSCam, TestCam;
+        //Callback OnEnter, OnLeave;
+        //GameObject CameraObject;
+        //Camera PCam, SSCam, TestCam;
         //public void Start()
         //{
         //    OnEnter = MapView.OnEnterMapView;

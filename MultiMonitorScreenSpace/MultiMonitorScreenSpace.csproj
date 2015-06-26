@@ -47,8 +47,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CamTest.cs" />
+    <Compile Include="Scenes\Editor.cs" />
+    <Compile Include="Scenes\MainMenu.cs" />
+    <Compile Include="Scenes\Flight.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Scenes\Loading.cs" />
+    <Compile Include="Scenes\SpaceCentre.cs" />
     <Compile Include="ScreenResizeBase.cs" />
+    <Compile Include="Utils.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="new  1.txt" />
