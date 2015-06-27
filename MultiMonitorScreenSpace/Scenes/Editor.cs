@@ -13,22 +13,59 @@ namespace MultiMonitorScreenSpace.Scenes
     {
         public void Start()
         {
-            StartCoroutine(editorInit());
-        }
-
-        IEnumerator editorInit()
-        {
-            while (EditorDriver.editorFacility == EditorFacility.None)
-                yield return null;
             foreach (Camera c in Camera.allCameras)
             {
-                Debug.Log(c.name);
                 if (c.name.Contains("UI"))
                     continue;
                 Utils.resizeViewPort(c);
             }
             Utils.resizeViewPort(EditorCamera.Instance.camera);
             Utils.setUIAnchors();
+        }
+
+        IEnumerator editorInit()
+        {
+            yield return null;
+        }
+
+        public void CameraDebug(Camera c)
+        {
+            Debug.Log(c.name);
+            Debug.Log(c.actualRenderingPath);
+            Debug.Log(c.aspect);
+            Debug.Log(c.backgroundColor);
+            Debug.Log(c.camera);
+            Debug.Log(c.cameraToWorldMatrix);
+            Debug.Log(c.clearFlags);
+            Debug.Log(c.clearStencilAfterLightingPass);
+            Debug.Log(c.cullingMask);
+            Debug.Log(c.depth);
+            Debug.Log(c.depthTextureMode);
+            Debug.Log(c.eventMask);
+            Debug.Log(c.farClipPlane);
+            Debug.Log(c.fieldOfView);
+            Debug.Log(c.hdr);
+            Debug.Log(c.hideFlags);
+            Debug.Log(c.isOrthoGraphic);
+            Debug.Log(c.layerCullDistances.Length);
+            Debug.Log(c.light);
+            Debug.Log(c.nearClipPlane);
+            Debug.Log(c.orthographic);
+            Debug.Log(c.orthographicSize);
+            Debug.Log(c.pixelHeight);
+            Debug.Log(c.pixelRect);
+            Debug.Log(c.pixelWidth);
+            Debug.Log(c.projectionMatrix);
+            Debug.Log(c.rect);
+            Debug.Log(c.renderingPath);
+            Debug.Log(c.stereoConvergence);
+            Debug.Log(c.stereoEnabled);
+            Debug.Log(c.stereoSeparation);
+            Debug.Log(c.targetTexture);
+            Debug.Log(c.transparencySortMode);
+            Debug.Log(c.useOcclusionCulling);
+            Debug.Log(c.velocity);
+            Debug.Log(c.worldToCameraMatrix);
         }
     }
 }

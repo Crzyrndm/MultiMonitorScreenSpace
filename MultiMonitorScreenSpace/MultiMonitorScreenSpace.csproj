@@ -46,6 +46,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Scenes\TrackingStation.cs" />
     <Compile Include="Utility\CameraViewRect.cs" />
     <Compile Include="Scenes\Editor.cs" />
     <Compile Include="Scenes\MainMenu.cs" />

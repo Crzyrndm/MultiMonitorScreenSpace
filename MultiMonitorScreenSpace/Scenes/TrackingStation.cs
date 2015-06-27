@@ -1,24 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections;
 using System.Linq;
 using UnityEngine;
 
 namespace MultiMonitorScreenSpace.Scenes
 {
     using Utility;
-    
-    [KSPAddon(KSPAddon.Startup.SpaceCentre, false)]
-    class SpaceCentre : MonoBehaviour
+
+    [KSPAddon(KSPAddon.Startup.TrackingStation, false)]
+    class TrackingStation : MonoBehaviour
     {
-        public void Start()
+        public void Awake()
         {
             foreach (Camera c in Camera.allCameras)
             {
-                // don't block the UI cameras in this scene
+                if (c.name.Contains("UI"))
+                    continue;
                 Utils.resizeViewPort(c);
             }
             Utils.setUIAnchors();
+        }
+
+        public void Start()
+        {
+            Utils.resizeViewPort(PlanetariumCamera.fetch.camera);
         }
     }
 }

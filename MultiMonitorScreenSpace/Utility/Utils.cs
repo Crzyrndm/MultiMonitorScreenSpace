@@ -54,27 +54,31 @@ namespace MultiMonitorScreenSpace.Utility
             CamsResized.Add(blackoutCamRight, blackoutCamRight.pixelRect);
         }
 
+        /// <summary>
+        /// sets screen space for SSUI system (main flight UI, parts of editor and main menu)
+        /// </summary>
         public static void setUIAnchors()
         {
             ScreenSafeUI UI = ScreenSafeUI.fetch;
+            // 1 unit = GameSettings.UI_Size
             if (UI.rightAnchor.bottom != null)
-            {
-                UI.rightAnchor.bottom.position = new Vector3(UI.rightAnchor.bottom.position.x * 0.5f, UI.rightAnchor.bottom.position.y, UI.rightAnchor.bottom.position.z);
-                if (UI.leftAnchor.bottom != null)
-                    UI.centerAnchor.bottom.position = (UI.leftAnchor.bottom.position + UI.rightAnchor.bottom.position) * 0.5f;
-            }
+                UI.rightAnchor.bottom.position = new Vector3((mainScreen.x + mainScreen.width) / GameSettings.UI_SIZE, 0, 0);
+            if (UI.centerAnchor.bottom != null)
+                UI.centerAnchor.bottom.position = new Vector3((mainScreen.x + 0.5f * mainScreen.width) / GameSettings.UI_SIZE, 0, 0);
+            if (UI.leftAnchor.bottom != null)
+                UI.leftAnchor.bottom.position = new Vector3(mainScreen.x / GameSettings.UI_SIZE, 0, 0);
             if (UI.rightAnchor.center != null)
-            {
-                UI.rightAnchor.center.position = new Vector3(UI.rightAnchor.center.position.x * 0.5f, UI.rightAnchor.center.position.y, UI.rightAnchor.center.position.z);
-                if (UI.leftAnchor.center != null)
-                    UI.centerAnchor.center.position = (UI.leftAnchor.center.position + UI.rightAnchor.center.position) * 0.5f;
-            }
-            if (UI.rightAnchor.top)
-            {
-                UI.rightAnchor.top.position = new Vector3(UI.rightAnchor.top.position.x * 0.5f, UI.rightAnchor.top.position.y, UI.rightAnchor.top.position.z);
-                if (UI.leftAnchor.top != null)
-                    UI.centerAnchor.top.position = (UI.leftAnchor.top.position + UI.rightAnchor.top.position) * 0.5f;   
-            }
+                UI.rightAnchor.center.position = new Vector3((mainScreen.x + mainScreen.width) / GameSettings.UI_SIZE, (mainScreen.y + 0.5f * mainScreen.height) / GameSettings.UI_SIZE, 0);
+            if (UI.centerAnchor.center != null)
+                UI.centerAnchor.center.position = new Vector3((mainScreen.x + 0.5f * mainScreen.width) / GameSettings.UI_SIZE, (mainScreen.y + 0.5f * mainScreen.height) / GameSettings.UI_SIZE, 0);
+            if (UI.leftAnchor.center != null)
+                UI.leftAnchor.center.position = new Vector3(mainScreen.x / GameSettings.UI_SIZE, (mainScreen.y + 0.5f * mainScreen.height) / GameSettings.UI_SIZE, 0);
+            if (UI.rightAnchor.top != null)
+                UI.rightAnchor.top.position = new Vector3((mainScreen.x + mainScreen.width) / GameSettings.UI_SIZE, (mainScreen.y + mainScreen.height) / GameSettings.UI_SIZE, 0);
+            if (UI.centerAnchor.top != null)
+                UI.centerAnchor.top.position = new Vector3((mainScreen.x + 0.5f * mainScreen.width) / GameSettings.UI_SIZE, (mainScreen.y + mainScreen.height) / GameSettings.UI_SIZE, 0);
+            if (UI.leftAnchor.top != null)
+                UI.leftAnchor.top.position = new Vector3(mainScreen.x / GameSettings.UI_SIZE, (mainScreen.y + mainScreen.height) / GameSettings.UI_SIZE, 0);
         }
     }
 }
