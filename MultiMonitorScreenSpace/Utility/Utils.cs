@@ -15,11 +15,12 @@ namespace MultiMonitorScreenSpace.Utility
             if (!CamsResized.ContainsKey(c))
             {
                 Rect r = c.pixelRect;
-                r.x = r.x * mainScreen.width / Screen.width + mainScreen.x;
+                r.x = mainScreen.x + r.x * mainScreen.width / Screen.width;
+                r.y = mainScreen.y + r.y * mainScreen.height / Screen.height;
                 r.width = r.width * mainScreen.width / Screen.width;
+                r.height = r.height * mainScreen.height / Screen.height;
                 c.pixelRect = r;
-                if (!CamsResized.ContainsKey(c))
-                    CamsResized.Add(c, c.pixelRect);
+                CamsResized.Add(c, c.pixelRect);
             }
             else if (c.pixelRect != CamsResized[c])
             {
@@ -27,8 +28,8 @@ namespace MultiMonitorScreenSpace.Utility
             }
         }
 
-        public static Camera blackoutCamLeft, blackoutCamRight;
-        public static GameObject cameraObjectLeft, cameraObjectRight;
+        public static Camera blackoutCamLeft, blackoutCamRight, blackoutCamTop, blackoutCamBottom;
+        public static GameObject cameraObjectLeft, cameraObjectRight, cameraObjectTop, cameraObjectBottom;
         public static void createBlackoutCameras()
         {
             if (cameraObjectLeft != null)
@@ -42,16 +43,32 @@ namespace MultiMonitorScreenSpace.Utility
             blackoutCamLeft.backgroundColor = Color.black;
             blackoutCamLeft.clearFlags = CameraClearFlags.SolidColor;
             blackoutCamLeft.cullingMask = 0;
-            blackoutCamLeft.pixelRect = new Rect(0, 0, Utils.mainScreen.x, Screen.height);
+            blackoutCamLeft.pixelRect = new Rect(0, 0, mainScreen.x, Screen.height);
             CamsResized.Add(blackoutCamLeft, blackoutCamLeft.pixelRect);
 
             cameraObjectRight = new GameObject("ExtraScreenBackgroundRight");
             UnityEngine.MonoBehaviour.DontDestroyOnLoad(cameraObjectRight);
             blackoutCamRight = cameraObjectRight.AddComponent<Camera>();
-            blackoutCamRight.name = "BlackoutCameraRight";
             blackoutCamRight.CopyFrom(blackoutCamLeft);
-            blackoutCamRight.pixelRect = new Rect(Utils.mainScreen.x + Utils.mainScreen.width, 0, Screen.width - Utils.mainScreen.xMax, Screen.height);
+            blackoutCamRight.name = "BlackoutCameraRight";
+            blackoutCamRight.pixelRect = new Rect(mainScreen.x + mainScreen.width, 0, Screen.width - (mainScreen.x + mainScreen.width), Screen.height);
             CamsResized.Add(blackoutCamRight, blackoutCamRight.pixelRect);
+
+            cameraObjectTop = new GameObject("ExtraScreenBackgroundTop");
+            UnityEngine.MonoBehaviour.DontDestroyOnLoad(cameraObjectTop);
+            blackoutCamTop = cameraObjectTop.AddComponent<Camera>();
+            blackoutCamTop.CopyFrom(blackoutCamLeft);
+            blackoutCamTop.name = "BlackoutCameraTop";
+            blackoutCamTop.pixelRect = new Rect(mainScreen.x, 0, mainScreen.x + mainScreen.width, mainScreen.y);
+            CamsResized.Add(blackoutCamTop, blackoutCamTop.pixelRect);
+
+            cameraObjectBottom = new GameObject("ExtraScreenBackgroundBottom");
+            UnityEngine.MonoBehaviour.DontDestroyOnLoad(cameraObjectBottom);
+            blackoutCamBottom = cameraObjectBottom.AddComponent<Camera>();
+            blackoutCamBottom.CopyFrom(blackoutCamLeft);
+            blackoutCamBottom.name = "BlackoutCameraBottom";
+            blackoutCamBottom.pixelRect = new Rect(mainScreen.x, mainScreen.y + mainScreen.height, mainScreen.x + mainScreen.width, Screen.height - (mainScreen.y + mainScreen.height));
+            CamsResized.Add(blackoutCamBottom, blackoutCamBottom.pixelRect);
         }
 
         /// <summary>
@@ -79,6 +96,17 @@ namespace MultiMonitorScreenSpace.Utility
                 UI.centerAnchor.top.position = new Vector3((mainScreen.x + 0.5f * mainScreen.width) / GameSettings.UI_SIZE, (mainScreen.y + mainScreen.height) / GameSettings.UI_SIZE, 0);
             if (UI.leftAnchor.top != null)
                 UI.leftAnchor.top.position = new Vector3(mainScreen.x / GameSettings.UI_SIZE, (mainScreen.y + mainScreen.height) / GameSettings.UI_SIZE, 0);
+        }
+
+        public static float TryGetValue(this ConfigNode node, string value, float defaultVal = 0)
+        {
+            if (node.HasValue(value))
+            {
+                float x;
+                if (float.TryParse(node.GetValue(value), out x))
+                    return x;
+            }
+            return defaultVal;
         }
     }
 }

@@ -12,7 +12,7 @@ namespace MultiMonitorScreenSpace.Scenes
     {
         public void Awake()
         {
-            Utils.mainScreen = new Rect(0, 0, 1920, Screen.height);
+            Utils.mainScreen = new Rect(0, 0, 1920, 1080);
 
             foreach (Camera c in Camera.allCameras)
             {

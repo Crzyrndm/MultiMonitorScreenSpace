@@ -16,16 +16,15 @@ namespace MultiMonitorScreenSpace.Scenes
             foreach (Camera c in Camera.allCameras)
             {
                 if (c.name.Contains("UI"))
+                {
                     continue;
-                Utils.resizeViewPort(c);
+                }
+                else
+                {
+                    Utils.resizeViewPort(c);
+                }
             }
-            Utils.resizeViewPort(EditorCamera.Instance.camera);
             Utils.setUIAnchors();
-        }
-
-        IEnumerator editorInit()
-        {
-            yield return null;
         }
 
         public void CameraDebug(Camera c)
