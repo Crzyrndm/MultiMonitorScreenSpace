@@ -7,13 +7,12 @@ namespace MultiMonitorScreenSpace.Scenes
 {
     using Utility;
 
-    [KSPAddon(KSPAddon.Startup.MainMenu, true)]
+    [KSPAddon(KSPAddon.Startup.MainMenu, false)]
     class MainMenu : MonoBehaviour
     {
         public void Awake()
         {
             ConfigNode renderSettingsNode = GameDatabase.Instance.GetConfigNodes("MultiScreenSettings").FirstOrDefault();
-            Debug.Log(renderSettingsNode);
             if (renderSettingsNode != null)
             {
                 ConfigNode mainDisplayNode = renderSettingsNode.GetNode("MainDisplay", 0);
@@ -24,7 +23,6 @@ namespace MultiMonitorScreenSpace.Scenes
                     displayRect.y = mainDisplayNode.TryGetValue("YPos", displayRect.x);
                     displayRect.width = mainDisplayNode.TryGetValue("Width", displayRect.x);
                     displayRect.height = mainDisplayNode.TryGetValue("Height", displayRect.x);
-                    Debug.Log(displayRect);
                     Utils.mainScreen = displayRect;
                 }
             }
