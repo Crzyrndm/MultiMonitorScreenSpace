@@ -30,45 +30,66 @@ namespace MultiMonitorScreenSpace.Utility
 
         public static Camera blackoutCamLeft, blackoutCamRight, blackoutCamTop, blackoutCamBottom;
         public static GameObject cameraObjectLeft, cameraObjectRight, cameraObjectTop, cameraObjectBottom;
-        public static void createBlackoutCameras()
+        public static void setBlackoutCameras()
         {
-            if (cameraObjectLeft != null)
-                return;
-
-            cameraObjectLeft = new GameObject("ExtraScreenBackgroundLeft");
-            UnityEngine.MonoBehaviour.DontDestroyOnLoad(cameraObjectLeft);
-            blackoutCamLeft = cameraObjectLeft.AddComponent<Camera>();
+            if (cameraObjectLeft == null)
+            {
+                cameraObjectLeft = new GameObject("ExtraScreenBackgroundLeft");
+                UnityEngine.MonoBehaviour.DontDestroyOnLoad(cameraObjectLeft);
+                blackoutCamLeft = cameraObjectLeft.AddComponent<Camera>();
+            }
             blackoutCamLeft.name = "BlackoutCameraLeft";
             blackoutCamLeft.depth = 5;
             blackoutCamLeft.backgroundColor = Color.black;
             blackoutCamLeft.clearFlags = CameraClearFlags.SolidColor;
             blackoutCamLeft.cullingMask = 0;
             blackoutCamLeft.pixelRect = new Rect(0, 0, mainScreen.x, Screen.height);
-            CamsResized.Add(blackoutCamLeft, blackoutCamLeft.pixelRect);
+            if (!CamsResized.ContainsKey(blackoutCamLeft))
+                CamsResized.Add(blackoutCamLeft, blackoutCamLeft.pixelRect);
+            else
+                CamsResized[blackoutCamLeft] = blackoutCamLeft.pixelRect;
 
-            cameraObjectRight = new GameObject("ExtraScreenBackgroundRight");
-            UnityEngine.MonoBehaviour.DontDestroyOnLoad(cameraObjectRight);
-            blackoutCamRight = cameraObjectRight.AddComponent<Camera>();
+            if (cameraObjectRight == null)
+            {
+                cameraObjectRight = new GameObject("ExtraScreenBackgroundRight");
+                UnityEngine.MonoBehaviour.DontDestroyOnLoad(cameraObjectRight);
+                blackoutCamRight = cameraObjectRight.AddComponent<Camera>();
+            }
             blackoutCamRight.CopyFrom(blackoutCamLeft);
             blackoutCamRight.name = "BlackoutCameraRight";
             blackoutCamRight.pixelRect = new Rect(mainScreen.x + mainScreen.width, 0, Screen.width - (mainScreen.x + mainScreen.width), Screen.height);
-            CamsResized.Add(blackoutCamRight, blackoutCamRight.pixelRect);
+            if (!CamsResized.ContainsKey(blackoutCamRight))
+                CamsResized.Add(blackoutCamRight, blackoutCamRight.pixelRect);
+            else
+                CamsResized[blackoutCamRight] = blackoutCamRight.pixelRect;
 
-            cameraObjectTop = new GameObject("ExtraScreenBackgroundTop");
-            UnityEngine.MonoBehaviour.DontDestroyOnLoad(cameraObjectTop);
-            blackoutCamTop = cameraObjectTop.AddComponent<Camera>();
+            if (cameraObjectTop == null)
+            {
+                cameraObjectTop = new GameObject("ExtraScreenBackgroundTop");
+                UnityEngine.MonoBehaviour.DontDestroyOnLoad(cameraObjectTop);
+                blackoutCamTop = cameraObjectTop.AddComponent<Camera>();
+            }
             blackoutCamTop.CopyFrom(blackoutCamLeft);
             blackoutCamTop.name = "BlackoutCameraTop";
             blackoutCamTop.pixelRect = new Rect(mainScreen.x, 0, mainScreen.x + mainScreen.width, mainScreen.y);
-            CamsResized.Add(blackoutCamTop, blackoutCamTop.pixelRect);
+            if (!CamsResized.ContainsKey(blackoutCamTop))
+                CamsResized.Add(blackoutCamTop, blackoutCamTop.pixelRect);
+            else
+                CamsResized[blackoutCamTop] = blackoutCamTop.pixelRect;
 
-            cameraObjectBottom = new GameObject("ExtraScreenBackgroundBottom");
-            UnityEngine.MonoBehaviour.DontDestroyOnLoad(cameraObjectBottom);
-            blackoutCamBottom = cameraObjectBottom.AddComponent<Camera>();
+            if (cameraObjectBottom == null)
+            {
+                cameraObjectBottom = new GameObject("ExtraScreenBackgroundBottom");
+                UnityEngine.MonoBehaviour.DontDestroyOnLoad(cameraObjectBottom);
+                blackoutCamBottom = cameraObjectBottom.AddComponent<Camera>();
+            }
             blackoutCamBottom.CopyFrom(blackoutCamLeft);
             blackoutCamBottom.name = "BlackoutCameraBottom";
             blackoutCamBottom.pixelRect = new Rect(mainScreen.x, mainScreen.y + mainScreen.height, mainScreen.x + mainScreen.width, Screen.height - (mainScreen.y + mainScreen.height));
-            CamsResized.Add(blackoutCamBottom, blackoutCamBottom.pixelRect);
+            if (!CamsResized.ContainsKey(blackoutCamBottom))
+                CamsResized.Add(blackoutCamBottom, blackoutCamBottom.pixelRect);
+            else
+                CamsResized[blackoutCamBottom] = blackoutCamBottom.pixelRect;
         }
 
         /// <summary>

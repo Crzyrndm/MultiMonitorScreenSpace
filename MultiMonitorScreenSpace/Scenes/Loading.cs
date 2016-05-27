@@ -19,7 +19,7 @@ namespace MultiMonitorScreenSpace.Scenes
                 Utils.resizeViewPort(c);
             }
 
-            Utils.createBlackoutCameras();
+            Utils.setBlackoutCameras();
         }
     }
 }

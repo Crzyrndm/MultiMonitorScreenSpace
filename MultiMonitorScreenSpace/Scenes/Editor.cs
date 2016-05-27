@@ -10,11 +10,18 @@ namespace MultiMonitorScreenSpace.Scenes
 
     [KSPAddon(KSPAddon.Startup.EditorAny, false)]
     class Editor : MonoBehaviour
-    {
-        public void Start()
+    {        
+        public void Awake()
+        {
+            StartCoroutine(camSlow());
+        }
+
+        IEnumerator camSlow()
         {
             foreach (Camera c in Camera.allCameras)
             {
+                //CameraDebug(c);
+                c.renderingPath = RenderingPath.UsePlayerSettings;
                 if (c.name.Contains("UI"))
                 {
                     continue;
@@ -24,7 +31,7 @@ namespace MultiMonitorScreenSpace.Scenes
                     Utils.resizeViewPort(c);
                 }
             }
-            Utils.setUIAnchors();
+            yield return new WaitForSeconds(5);
         }
 
         public void CameraDebug(Camera c)

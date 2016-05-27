@@ -34,6 +34,7 @@ namespace MultiMonitorScreenSpace.Scenes
             }
 
             Utils.setUIAnchors();
+            Utils.setBlackoutCameras();
         }
     }
 }
